@@ -1,6 +1,6 @@
 {
-  "name": "Documenso",
-  "short_name": "Documenso",
+  "name": "DokuHR",
+  "short_name": "DokuHR",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -13,7 +13,7 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#A2E771",
-  "background_color": "#FFFFFF",
+  "theme_color": "#1F4E78",
+  "background_color": "#FDFBF7",
   "display": "standalone"
 }

@@ -13,11 +13,11 @@ export function meta({ params: { slug } }: Route.MetaArgs) {
   }
 
   return [
-    { title: 'Documenso - Share' },
+    { title: 'DokuHR - Share' },
     { description: 'I just signed a document in style with DokuHR!' },
     {
       property: 'og:title',
-      content: 'Documenso - Join the open source signing revolution',
+      content: 'DokuHR - Professional Document Signing',
     },
     {
       property: 'og:description',
@@ -33,7 +33,7 @@ export function meta({ params: { slug } }: Route.MetaArgs) {
     },
     {
       name: 'twitter:site',
-      content: '@documenso',
+      content: '@dokuhr',
     },
     {
       name: 'twitter:card',
@@ -70,7 +70,7 @@ export const loader = async ({ request, params: { slug } }: Route.LoaderArgs) =>
     return {};
   }
 
-  // Is hardcoded because this whole meta is hardcoded anyway for Documenso.
+  // Is hardcoded because this whole meta is hardcoded anyway for DokuHR.
   throw redirect('https://documenso.com');
 };
 

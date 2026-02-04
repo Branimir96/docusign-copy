@@ -1,5 +1,26 @@
 @import '@documenso/ui/styles/theme.css';
 
+/* DokuHR Brand Fonts - DM Serif Display for headings, Work Sans for body */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@400;500;600;700&display=swap');
+
+/* Work Sans Variable Fonts for body text */
+@font-face {
+  font-family: 'Work Sans';
+  src: url('https://fonts.gstatic.com/s/worksans/v19/QGYsz_wNahGAdqQ43Rh_fKDp.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* DM Serif Display for headings */
+@font-face {
+  font-family: 'DM Serif Display';
+  src: url('https://fonts.gstatic.com/s/dmserifddisplay/v15/-nFnOHM81r4j6k0gjAW3mujVU2B2K_d7.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Inter Variable Fonts */
 @font-face {
   font-family: 'Inter';
@@ -64,8 +85,426 @@
 
 @layer base {
   :root {
-    --font-sans: 'Inter';
+    /* DokuHR Brand Fonts */
+    --font-sans: 'Work Sans', 'Inter', system-ui, sans-serif;
+    --font-heading: 'DM Serif Display', Georgia, serif;
     --font-signature: 'Caveat';
     --font-noto: 'Noto Sans', 'Noto Sans Korean', 'Noto Sans Japanese', 'Noto Sans Chinese';
+
+    /* =============================================
+     * DOKUHR SPACING SYSTEM
+     * ============================================= */
+    --space-xs: 0.5rem;   /* 8px */
+    --space-sm: 1rem;     /* 16px */
+    --space-md: 1.5rem;   /* 24px */
+    --space-lg: 2rem;     /* 32px */
+    --space-xl: 3rem;     /* 48px */
+    --space-2xl: 4rem;    /* 64px */
+
+    /* =============================================
+     * DOKUHR BORDER RADIUS SYSTEM
+     * ============================================= */
+    --radius-btn: 8px;    /* Buttons, small elements */
+    --radius-card: 12px;  /* Cards, containers */
+    --radius-pill: 50px;  /* Pills, badges, tags */
   }
+
+  /*
+   * =============================================
+   * DOKUHR TYPOGRAPHY SYSTEM
+   * =============================================
+   * - Headings: DM Serif Display (serif)
+   * - Body/UI: Work Sans (sans-serif)
+   * =============================================
+   */
+
+  /* Body Text - Sans-Serif (Work Sans) */
+  body {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* Keep sans-serif for UI elements */
+  button,
+  input,
+  select,
+  textarea,
+  label,
+  .body-text,
+  nav,
+  table,
+  th,
+  td {
+    font-family: var(--font-sans);
+  }
+
+  /* Headings - Serif Font (DM Serif Display) */
+  h1, h2, h3,
+  .page-title,
+  .section-title,
+  .font-heading,
+  [class*="DialogTitle"],
+  [class*="dialog-title"],
+  [class*="modal-title"],
+  [class*="empty-state"] h2,
+  [class*="empty-state"] h3 {
+    font-family: var(--font-heading);
+    color: hsl(var(--brand-dark, 212 57% 19%));
+  }
+
+  /* Font Sizes - Responsive */
+  h1, .page-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    font-weight: 400;
+  }
+
+  h2, .section-title {
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    line-height: 1.2;
+    font-weight: 400;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+    line-height: 1.3;
+    font-weight: 400;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* Small text */
+  small, .text-sm {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  /* Muted/secondary text */
+  .text-muted, .text-muted-foreground {
+    color: hsl(var(--muted-foreground));
+  }
+}
+
+/*
+ * Utility classes for typography
+ */
+.font-heading {
+  font-family: var(--font-heading) !important;
+}
+
+.font-sans {
+  font-family: var(--font-sans) !important;
+}
+
+/*
+ * =============================================
+ * DOKUHR BUTTON STYLES
+ * =============================================
+ * Primary (Orange): CTAs - Upload, Create, Download, Sign
+ * Secondary (Blue): Navigation, secondary actions
+ * =============================================
+ */
+
+/* Primary Buttons - Orange CTA */
+.btn-primary,
+.button-primary,
+[data-variant="primary"],
+button[class*="bg-primary"],
+a[class*="bg-primary"] {
+  background: #FF6B35 !important;
+  color: white !important;
+  border: none;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+}
+
+.btn-primary:hover,
+.button-primary:hover,
+[data-variant="primary"]:hover,
+button[class*="bg-primary"]:hover,
+a[class*="bg-primary"]:hover {
+  background: #FF8C61 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(255, 107, 53, 0.4);
+}
+
+.btn-primary:active,
+.button-primary:active,
+[data-variant="primary"]:active,
+button[class*="bg-primary"]:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(255, 107, 53, 0.3);
+}
+
+.btn-primary:focus-visible,
+.button-primary:focus-visible,
+[data-variant="primary"]:focus-visible {
+  outline: 2px solid #FF6B35;
+  outline-offset: 2px;
+}
+
+/* Secondary Buttons - White with Border (See Pricing, Cancel, etc.) */
+.btn-secondary,
+.button-secondary,
+[data-variant="secondary"],
+button[class*="bg-secondary"]:not([class*="nav"]),
+a[class*="bg-secondary"]:not([class*="nav"]) {
+  background: #FDFBF7 !important;
+  color: #1F4E78 !important;
+  border: 2px solid #E8E3D6 !important;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-secondary:hover,
+.button-secondary:hover,
+[data-variant="secondary"]:hover,
+button[class*="bg-secondary"]:not([class*="nav"]):hover,
+a[class*="bg-secondary"]:not([class*="nav"]):hover {
+  border-color: #1F4E78 !important;
+  background: rgba(31, 78, 120, 0.03) !important;
+  transform: translateY(-2px);
+}
+
+/* Navigation Buttons - Solid Blue (for nav elements) */
+.btn-nav,
+.button-nav,
+nav button,
+nav a[class*="bg-secondary"] {
+  background: #1F4E78 !important;
+  color: white !important;
+  border: none !important;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-nav:hover,
+.button-nav:hover,
+nav button:hover,
+nav a[class*="bg-secondary"]:hover {
+  background: #152F4D !important;
+  transform: translateY(-2px);
+}
+
+/* Outline/Ghost buttons */
+.btn-outline,
+[data-variant="outline"],
+button[class*="border-primary"] {
+  background: transparent !important;
+  border: 2px solid #E8E3D6 !important;
+  color: #1F4E78 !important;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover,
+[data-variant="outline"]:hover,
+button[class*="border-primary"]:hover {
+  border-color: #1F4E78 !important;
+  background: rgba(31, 78, 120, 0.05) !important;
+  transform: translateY(-2px);
+}
+
+/* Ghost buttons (minimal styling) */
+.btn-ghost,
+[data-variant="ghost"] {
+  background: transparent !important;
+  color: #1F4E78 !important;
+  border: none !important;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-ghost:hover,
+[data-variant="ghost"]:hover {
+  background: rgba(31, 78, 120, 0.08) !important;
+}
+
+/* Success state buttons */
+.btn-success,
+[data-variant="success"] {
+  background: #2D8659 !important;
+  color: white !important;
+  border-radius: 8px;
+}
+
+.btn-success:hover,
+[data-variant="success"]:hover {
+  background: #236b47 !important;
+  transform: translateY(-2px);
+}
+
+/*
+ * =============================================
+ * BUTTON SIZE CONSISTENCY
+ * =============================================
+ * All buttons use 8px border-radius
+ * =============================================
+ */
+
+/* Base button styles - consistent border-radius for all */
+button,
+.btn,
+[class*="btn-"],
+[role="button"] {
+  border-radius: 8px !important;
+}
+
+/* Small buttons */
+.btn-sm,
+.button-sm,
+[data-size="sm"] {
+  padding: 0.75rem 1.5rem !important;
+  font-size: 0.875rem;
+  border-radius: 8px !important;
+}
+
+/* Default/Normal buttons */
+.btn-md,
+.button-md,
+[data-size="md"],
+button:not([data-size]):not(.btn-sm):not(.btn-lg):not(.btn-xl):not(.btn-cta) {
+  padding: 1rem 2rem !important;
+  font-size: 1rem;
+  border-radius: 8px !important;
+}
+
+/* Large CTA buttons */
+.btn-lg,
+.button-lg,
+[data-size="lg"],
+.btn-xl,
+.button-xl,
+[data-size="xl"],
+.btn-cta {
+  padding: 1.25rem 2.5rem !important;
+  font-size: 1.1rem;
+  border-radius: 8px !important;
+  font-weight: 600;
+}
+
+/*
+ * =============================================
+ * DOKUHR BACKGROUND COLORS
+ * =============================================
+ */
+
+/* Main app container/body - Warm cream from landing page */
+body,
+.app-container,
+main,
+.bg-background {
+  background: #FDFBF7 !important;
+}
+
+/* Cards and content containers - White with border */
+.card,
+.document-card,
+.content-box,
+.bg-card,
+.bg-popover,
+[data-slot="card"],
+[class*="rounded-lg"][class*="border"] {
+  background: white !important;
+  border: 1px solid var(--border, #E8E3D6) !important;
+  border-radius: 12px !important;
+}
+
+/* Sidebar/navigation - White with border */
+.sidebar,
+.nav-container,
+nav[class*="flex-col"],
+aside,
+[data-slot="sidebar"] {
+  background: white !important;
+  border-right: 1px solid var(--border, #E8E3D6) !important;
+}
+
+/* Override Tailwind bg-white to keep white for cards */
+.bg-white {
+  background-color: white !important;
+}
+
+/*
+ * =============================================
+ * BORDER RADIUS CONSISTENCY
+ * =============================================
+ */
+
+/* Buttons, inputs, small elements - 8px */
+button,
+.btn,
+[class*="btn-"],
+[role="button"],
+input,
+select,
+textarea,
+.input,
+.select {
+  border-radius: var(--radius-btn, 8px) !important;
+}
+
+/* Cards, containers, modals - 12px */
+.card,
+.document-card,
+.content-box,
+.modal,
+.dialog,
+.popover,
+.dropdown-menu,
+[data-slot="card"],
+[data-slot="dialog"],
+[role="dialog"] {
+  border-radius: var(--radius-card, 12px) !important;
+}
+
+/* Pills, badges, tags - 50px */
+.badge,
+.tag,
+.pill,
+.chip,
+[data-slot="badge"],
+[class*="rounded-full"] {
+  border-radius: var(--radius-pill, 50px) !important;
+}
+
+/*
+ * =============================================
+ * FORCE LIGHT MODE - DISABLE DARK MODE
+ * =============================================
+ */
+
+/* Override dark mode selectors to use light mode values */
+.dark,
+[data-theme="dark"],
+html.dark {
+  /* Force light mode colors */
+  --background: 40 60% 98% !important;
+  --foreground: 212 57% 19% !important;
+  --card: 0 0% 100% !important;
+  --card-foreground: 212 57% 19% !important;
+  --popover: 0 0% 100% !important;
+  --popover-foreground: 212 57% 19% !important;
+  --primary: 16 100% 60% !important;
+  --primary-foreground: 0 0% 100% !important;
+  --secondary: 208 59% 30% !important;
+  --secondary-foreground: 0 0% 100% !important;
+  --muted: 42 36% 93% !important;
+  --muted-foreground: 215 16% 47% !important;
+  --accent: 42 36% 93% !important;
+  --accent-foreground: 212 57% 19% !important;
+  --border: 43 27% 87% !important;
+  color-scheme: light !important;
+}
+
+/* Ensure html always uses light color scheme */
+html {
+  color-scheme: light !important;
 }

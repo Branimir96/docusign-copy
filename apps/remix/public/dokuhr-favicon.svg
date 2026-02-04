@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background circle with brand blue -->
+  <circle cx="256" cy="256" r="256" fill="#1F4E78"/>
+
+  <!-- Letter D in orange -->
+  <text
+    x="256"
+    y="340"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="320"
+    font-weight="bold"
+    fill="#FF6B35"
+    text-anchor="middle"
+  >D</text>
+</svg>

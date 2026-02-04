@@ -9,7 +9,7 @@ import {
   useLoaderData,
   useLocation,
 } from 'react-router';
-import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from 'remix-themes';
+import { PreventFlashOnWrongTheme, ThemeProvider } from 'remix-themes';
 
 import { getOptionalSession } from '@documenso/auth/server/lib/utils/get-session';
 import { SessionProvider } from '@documenso/lib/client-only/providers/session';
@@ -100,12 +100,20 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
   const { publicEnv, session, lang, disableAnimations, ...data } =
     useLoaderData<typeof loader>() || {};
 
-  const [theme] = useTheme();
+  // Force light mode - ignore theme preference
+  // const [theme] = useTheme();
 
   return (
-    <html translate="no" lang={lang} data-theme={theme} className={theme ?? ''}>
+    <html translate="no" lang={lang} data-theme="light" className="light">
       <head>
         <meta charSet="utf-8" />
+        {/* DokuHR Brand Fonts - Google Fonts Preconnect */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
