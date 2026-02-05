@@ -33,6 +33,19 @@ const MIN_WIDTH_PX = 36;
 const DEFAULT_HEIGHT_PX = MIN_HEIGHT_PX * 2.5;
 const DEFAULT_WIDTH_PX = MIN_WIDTH_PX * 2.5;
 
+/**
+ * Per-field-type default dimensions so text-heavy fields (Name, Email, Date)
+ * are wide enough to display their content without truncation.
+ */
+const FIELD_TYPE_DEFAULTS: Partial<Record<FieldType, { width: number; height: number }>> = {
+  [FieldType.NAME]: { width: 200, height: DEFAULT_HEIGHT_PX },
+  [FieldType.EMAIL]: { width: 200, height: DEFAULT_HEIGHT_PX },
+  [FieldType.DATE]: { width: 160, height: DEFAULT_HEIGHT_PX },
+  [FieldType.TEXT]: { width: 160, height: DEFAULT_HEIGHT_PX },
+  [FieldType.NUMBER]: { width: 120, height: DEFAULT_HEIGHT_PX },
+  [FieldType.SIGNATURE]: { width: 200, height: 60 },
+};
+
 export const fieldButtonList = [
   {
     type: FieldType.SIGNATURE,
@@ -234,9 +247,11 @@ export const EnvelopeEditorFieldDragDrop = ({
         return;
       }
 
+      const defaults = selectedField ? FIELD_TYPE_DEFAULTS[selectedField] : null;
+
       fieldBounds.current = {
-        height: Math.max(DEFAULT_HEIGHT_PX),
-        width: Math.max(DEFAULT_WIDTH_PX),
+        height: defaults?.height ?? DEFAULT_HEIGHT_PX,
+        width: defaults?.width ?? DEFAULT_WIDTH_PX,
       };
     });
 
@@ -248,7 +263,19 @@ export const EnvelopeEditorFieldDragDrop = ({
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [selectedField]);
+
+  // Update field bounds when a different field type is selected.
+  useEffect(() => {
+    if (selectedField) {
+      const defaults = FIELD_TYPE_DEFAULTS[selectedField];
+
+      fieldBounds.current = {
+        height: defaults?.height ?? DEFAULT_HEIGHT_PX,
+        width: defaults?.width ?? DEFAULT_WIDTH_PX,
+      };
+    }
+  }, [selectedField]);
 
   useEffect(() => {
     if (selectedField) {
@@ -278,13 +305,13 @@ export const EnvelopeEditorFieldDragDrop = ({
             onMouseDown={() => setSelectedField(field.type)}
             data-selected={selectedField === field.type ? true : undefined}
             className={cn(
-              'border-border group flex h-12 cursor-pointer items-center justify-center rounded-lg border px-4 transition-colors',
+              'group flex h-12 cursor-pointer items-center justify-center rounded-lg border border-border px-4 transition-colors',
               RECIPIENT_COLOR_STYLES[selectedRecipientColor].fieldButton,
             )}
           >
             <p
               className={cn(
-                'text-muted-foreground font-noto group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
+                'flex items-center justify-center gap-x-1.5 font-noto text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
                 field.className,
                 {
                   'group-hover:text-recipient-green': selectedRecipientColor === 'green',
@@ -306,7 +333,7 @@ export const EnvelopeEditorFieldDragDrop = ({
       {selectedField && (
         <div
           className={cn(
-            'text-muted-foreground dark:text-muted-background font-noto pointer-events-none fixed z-50 flex cursor-pointer flex-col items-center justify-center rounded-[2px] bg-white ring-2 transition duration-200 [container-type:size]',
+            'dark:text-muted-background pointer-events-none fixed z-50 flex cursor-pointer flex-col items-center justify-center rounded-[2px] bg-white font-noto text-muted-foreground ring-2 transition duration-200 [container-type:size]',
             RECIPIENT_COLOR_STYLES[selectedRecipientColor].base,
             selectedField === FieldType.SIGNATURE && 'font-signature',
             {

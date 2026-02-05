@@ -439,11 +439,11 @@ aside,
  */
 
 /* Buttons, inputs, small elements - 8px */
-button,
+button:not([role="switch"]):not([data-state]),
 .btn,
 [class*="btn-"],
-[role="button"],
-input,
+[role="button"]:not([role="switch"]),
+input:not([type="checkbox"]):not([type="radio"]),
 select,
 textarea,
 .input,
@@ -507,4 +507,38 @@ html.dark {
 /* Ensure html always uses light color scheme */
 html {
   color-scheme: light !important;
+}
+
+/*
+ * =============================================
+ * SWITCH & CHECKBOX FIX
+ * =============================================
+ * Ensure toggles and checkboxes are clearly visible
+ * =============================================
+ */
+
+/* Switch track - must stay rounded pill shape */
+[role="switch"],
+button[data-state="checked"],
+button[data-state="unchecked"] {
+  border-radius: 9999px !important;
+}
+
+/* Switch thumb - always white circle */
+[role="switch"] > span {
+  border-radius: 9999px !important;
+  background-color: white !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Switch checked state - brand blue */
+[role="switch"][data-state="checked"],
+button[data-state="checked"][role="switch"] {
+  background-color: #1F4E78 !important;
+}
+
+/* Switch unchecked state - neutral gray */
+[role="switch"][data-state="unchecked"],
+button[data-state="unchecked"][role="switch"] {
+  background-color: #cbd5e1 !important;
 }

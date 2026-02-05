@@ -65,6 +65,19 @@ const MIN_WIDTH_PX = 36;
 const DEFAULT_HEIGHT_PX = MIN_HEIGHT_PX * 2.5;
 const DEFAULT_WIDTH_PX = MIN_WIDTH_PX * 2.5;
 
+/**
+ * Per-field-type default dimensions so text-heavy fields (Name, Email, Date)
+ * are wide enough to display their content without truncation.
+ */
+const FIELD_TYPE_DEFAULTS: Partial<Record<FieldType, { width: number; height: number }>> = {
+  [FieldType.NAME]: { width: 200, height: DEFAULT_HEIGHT_PX },
+  [FieldType.EMAIL]: { width: 200, height: DEFAULT_HEIGHT_PX },
+  [FieldType.DATE]: { width: 160, height: DEFAULT_HEIGHT_PX },
+  [FieldType.TEXT]: { width: 160, height: DEFAULT_HEIGHT_PX },
+  [FieldType.NUMBER]: { width: 120, height: DEFAULT_HEIGHT_PX },
+  [FieldType.SIGNATURE]: { width: 200, height: 60 },
+};
+
 export type FieldFormType = {
   nativeId?: number;
   formId: string;
@@ -498,6 +511,18 @@ export const AddFieldsFormPartial = ({
     };
   }, [onMouseClick, onMouseMove, selectedField]);
 
+  // Update field bounds when a different field type is selected.
+  useEffect(() => {
+    if (selectedField) {
+      const defaults = FIELD_TYPE_DEFAULTS[selectedField];
+
+      fieldBounds.current = {
+        height: defaults?.height ?? DEFAULT_HEIGHT_PX,
+        width: defaults?.width ?? DEFAULT_WIDTH_PX,
+      };
+    }
+  }, [selectedField]);
+
   useEffect(() => {
     const observer = new MutationObserver((_mutations) => {
       const $page = document.querySelector(PDF_VIEWER_PAGE_SELECTOR);
@@ -506,9 +531,11 @@ export const AddFieldsFormPartial = ({
         return;
       }
 
+      const defaults = selectedField ? FIELD_TYPE_DEFAULTS[selectedField] : null;
+
       fieldBounds.current = {
-        height: Math.max(DEFAULT_HEIGHT_PX),
-        width: Math.max(DEFAULT_WIDTH_PX),
+        height: defaults?.height ?? DEFAULT_HEIGHT_PX,
+        width: defaults?.width ?? DEFAULT_WIDTH_PX,
       };
     });
 
@@ -520,7 +547,7 @@ export const AddFieldsFormPartial = ({
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [selectedField]);
 
   useEffect(() => {
     const recipientsByRoleToDisplay = recipients.filter(
@@ -665,8 +692,8 @@ export const AddFieldsFormPartial = ({
                       }
                       minHeight={MIN_HEIGHT_PX}
                       minWidth={MIN_WIDTH_PX}
-                      defaultHeight={DEFAULT_HEIGHT_PX}
-                      defaultWidth={DEFAULT_WIDTH_PX}
+                      defaultHeight={FIELD_TYPE_DEFAULTS[field.type]?.height ?? DEFAULT_HEIGHT_PX}
+                      defaultWidth={FIELD_TYPE_DEFAULTS[field.type]?.width ?? DEFAULT_WIDTH_PX}
                       passive={isFieldWithinBounds && !!selectedField}
                       onFocus={() => setLastActiveField(field)}
                       onBlur={() => {
