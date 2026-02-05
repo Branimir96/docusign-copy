@@ -105,6 +105,21 @@ export const EnvelopeEditorPreviewPage = () => {
             };
           })
           .with({ type: FieldType.NAME }, () => {
+            const label = field.fieldMeta?.label?.toLowerCase() ?? '';
+
+            if (label.includes('first')) {
+              return {
+                customText: recipientName.split(' ')[0] ?? recipientName,
+              };
+            }
+
+            if (label.includes('last')) {
+              const parts = recipientName.split(' ');
+              return {
+                customText: parts.length > 1 ? parts.slice(1).join(' ') : recipientName,
+              };
+            }
+
             return {
               customText: recipientName,
             };

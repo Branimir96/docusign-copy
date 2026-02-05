@@ -89,7 +89,7 @@ export const extractFieldInsertionValues = ({
       return {
         customText: DateTime.now()
           .setZone(documentMeta.timezone ?? DEFAULT_DOCUMENT_TIME_ZONE)
-          .toFormat(documentMeta.dateFormat ?? DEFAULT_DOCUMENT_DATE_FORMAT),
+          .toFormat(DEFAULT_DOCUMENT_DATE_FORMAT),
         inserted: true,
       };
     })

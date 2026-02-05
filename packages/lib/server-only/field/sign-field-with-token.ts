@@ -198,7 +198,7 @@ export const signFieldWithToken = async ({
   if (field.type === FieldType.DATE) {
     customText = DateTime.now()
       .setZone(documentMeta?.timezone ?? DEFAULT_DOCUMENT_TIME_ZONE)
-      .toFormat(documentMeta?.dateFormat ?? DEFAULT_DOCUMENT_DATE_FORMAT);
+      .toFormat(DEFAULT_DOCUMENT_DATE_FORMAT);
   }
 
   if (isSignatureField && !signatureImageAsBase64 && !typedSignature) {
