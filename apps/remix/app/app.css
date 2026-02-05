@@ -272,10 +272,11 @@ a[class*="bg-secondary"]:not([class*="nav"]):hover {
   transform: translateY(-2px);
 }
 
-/* Navigation Buttons - Solid Blue (for nav elements) */
+/* Navigation Buttons - Solid Blue (for nav elements)
+   Excludes outline variant buttons (have border-input class) which should stay white with border */
 .btn-nav,
 .button-nav,
-nav button,
+nav button:not(.border-input):not(.outline-btn),
 nav a[class*="bg-secondary"] {
   background: #1F4E78 !important;
   color: white !important;
@@ -286,10 +287,28 @@ nav a[class*="bg-secondary"] {
 
 .btn-nav:hover,
 .button-nav:hover,
-nav button:hover,
+nav button:not(.border-input):not(.outline-btn):hover,
 nav a[class*="bg-secondary"]:hover {
   background: #152F4D !important;
   transform: translateY(-2px);
+}
+
+/* Header utility buttons (Attachments, Settings) - White with border
+   Target outline variant buttons by their border-input class */
+nav button.border-input,
+nav .outline-btn,
+header button.border-input {
+  background: white !important;
+  color: #1F4E78 !important;
+  border: 1px solid #E8E3D6 !important;
+  font-weight: 500;
+}
+
+nav button.border-input:hover,
+nav .outline-btn:hover,
+header button.border-input:hover {
+  border-color: #1F4E78 !important;
+  background: rgba(31, 78, 120, 0.03) !important;
 }
 
 /* Outline/Ghost buttons */

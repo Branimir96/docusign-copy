@@ -317,6 +317,7 @@ export const FIELD_NAME_META_DEFAULT_VALUES: TNameFieldMeta = {
   type: 'name',
   fontSize: DEFAULT_FIELD_FONT_SIZE,
   textAlign: 'left',
+  label: '',
 };
 
 export const FIELD_EMAIL_META_DEFAULT_VALUES: TEmailFieldMeta = {
