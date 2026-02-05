@@ -12,7 +12,9 @@ import {
   ListIcon,
   MailIcon,
   TextIcon,
+  UserCheckIcon,
   UserIcon,
+  UserXIcon,
 } from 'lucide-react';
 
 import { getBoundingClientRect } from '@documenso/lib/client-only/get-bounding-client-rect';
@@ -48,52 +50,76 @@ const FIELD_TYPE_DEFAULTS: Partial<Record<FieldType, { width: number; height: nu
 
 export const fieldButtonList = [
   {
+    key: 'SIGNATURE',
     type: FieldType.SIGNATURE,
     icon: SignatureIcon,
     name: msg`Signature`,
     className: 'font-signature text-lg',
   },
   {
+    key: 'EMAIL',
     type: FieldType.EMAIL,
     icon: MailIcon,
     name: msg`Email`,
   },
   {
+    key: 'NAME',
     type: FieldType.NAME,
     icon: UserIcon,
-    name: msg`Name`,
+    name: msg`Full Name`,
   },
   {
+    key: 'INITIALS',
     type: FieldType.INITIALS,
     icon: ContactIcon,
     name: msg`Initials`,
   },
   {
+    key: 'FIRST_NAME',
+    type: FieldType.NAME,
+    icon: UserCheckIcon,
+    name: msg`First Name`,
+    defaultLabel: 'First Name',
+  },
+  {
+    key: 'LAST_NAME',
+    type: FieldType.NAME,
+    icon: UserXIcon,
+    name: msg`Last Name`,
+    defaultLabel: 'Last Name',
+  },
+  {
+    key: 'DATE',
     type: FieldType.DATE,
     icon: CalendarIcon,
     name: msg`Date`,
   },
   {
+    key: 'TEXT',
     type: FieldType.TEXT,
     icon: TextIcon,
     name: msg`Text`,
   },
   {
+    key: 'NUMBER',
     type: FieldType.NUMBER,
     icon: HashIcon,
     name: msg`Number`,
   },
   {
+    key: 'RADIO',
     type: FieldType.RADIO,
     icon: DiscIcon,
     name: msg`Radio`,
   },
   {
+    key: 'CHECKBOX',
     type: FieldType.CHECKBOX,
     icon: CheckSquareIcon,
     name: msg`Checkbox`,
   },
   {
+    key: 'DROPDOWN',
     type: FieldType.DROPDOWN,
     icon: ListIcon,
     name: msg`Dropdown`,
@@ -113,7 +139,14 @@ export const EnvelopeEditorFieldDragDrop = ({
 
   const { t } = useLingui();
 
-  const [selectedField, setSelectedField] = useState<FieldType | null>(null);
+  const [selectedFieldKey, setSelectedFieldKey] = useState<string | null>(null);
+
+  const selectedFieldConfig = useMemo(
+    () => fieldButtonList.find((f) => f.key === selectedFieldKey) ?? null,
+    [selectedFieldKey],
+  );
+
+  const selectedField = selectedFieldConfig?.type ?? null;
 
   const { isWithinPageBounds, getPage } = useDocumentElement();
 
@@ -182,7 +215,7 @@ export const EnvelopeEditorFieldDragDrop = ({
           fieldBounds.current.height,
         )
       ) {
-        setSelectedField(null);
+        setSelectedFieldKey(null);
         return;
       }
 
@@ -211,6 +244,13 @@ export const EnvelopeEditorFieldDragDrop = ({
       pageX -= fieldPageWidth / 2;
       pageY -= fieldPageHeight / 2;
 
+      const fieldMeta = structuredClone(FIELD_META_DEFAULT_VALUES[selectedField]);
+
+      // Set the label from the button config (e.g. "First Name", "Last Name")
+      if (selectedFieldConfig?.defaultLabel && fieldMeta) {
+        fieldMeta.label = selectedFieldConfig.defaultLabel;
+      }
+
       const field = {
         formId: nanoid(12),
         envelopeItemId: selectedEnvelopeItemId,
@@ -221,17 +261,18 @@ export const EnvelopeEditorFieldDragDrop = ({
         width: fieldPageWidth,
         height: fieldPageHeight,
         recipientId: selectedRecipientId,
-        fieldMeta: structuredClone(FIELD_META_DEFAULT_VALUES[selectedField]),
+        fieldMeta,
       };
 
       editorFields.addField(field);
 
       setIsFieldWithinBounds(false);
-      setSelectedField(null);
+      setSelectedFieldKey(null);
     },
     [
       isWithinPageBounds,
       selectedField,
+      selectedFieldConfig,
       selectedRecipientId,
       selectedEnvelopeItemId,
       getPage,
@@ -299,11 +340,11 @@ export const EnvelopeEditorFieldDragDrop = ({
         {fieldButtonList.map((field) => (
           <button
             disabled={isFieldsDisabled}
-            key={field.type}
+            key={field.key}
             type="button"
-            onClick={() => setSelectedField(field.type)}
-            onMouseDown={() => setSelectedField(field.type)}
-            data-selected={selectedField === field.type ? true : undefined}
+            onClick={() => setSelectedFieldKey(field.key)}
+            onMouseDown={() => setSelectedFieldKey(field.key)}
+            data-selected={selectedFieldKey === field.key ? true : undefined}
             className={cn(
               'group flex h-12 cursor-pointer items-center justify-center rounded-lg border border-border px-4 transition-colors',
               RECIPIENT_COLOR_STYLES[selectedRecipientColor].fieldButton,
@@ -349,7 +390,9 @@ export const EnvelopeEditorFieldDragDrop = ({
           }}
         >
           <span className="text-[clamp(0.425rem,25cqw,0.825rem)]">
-            {t(FRIENDLY_FIELD_TYPE[selectedField])}
+            {selectedFieldConfig
+              ? t(selectedFieldConfig.name)
+              : t(FRIENDLY_FIELD_TYPE[selectedField])}
           </span>
         </div>
       )}

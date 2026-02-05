@@ -427,8 +427,9 @@ aside,
   border-right: 1px solid var(--border, #E8E3D6) !important;
 }
 
-/* Override Tailwind bg-white to keep white for cards */
-.bg-white {
+/* Override Tailwind bg-white to keep white for cards.
+   Exclude interactive form controls so their state changes work. */
+.bg-white:not(.dokuhr-checkbox):not(.dokuhr-switch):not(.dokuhr-switch-thumb) {
   background-color: white !important;
 }
 
@@ -511,34 +512,53 @@ html {
 
 /*
  * =============================================
- * SWITCH & CHECKBOX FIX
+ * SWITCH & CHECKBOX STYLES
  * =============================================
- * Ensure toggles and checkboxes are clearly visible
+ * Uses high-specificity selectors + !important to
+ * override any global bg-white / border-radius rules.
  * =============================================
  */
 
-/* Switch track - must stay rounded pill shape */
-[role="switch"],
-button[data-state="checked"],
-button[data-state="unchecked"] {
+/* ---- SWITCH ---- */
+
+/* Track: pill shape */
+.dokuhr-switch {
   border-radius: 9999px !important;
 }
 
-/* Switch thumb - always white circle */
-[role="switch"] > span {
-  border-radius: 9999px !important;
-  background-color: white !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
-}
-
-/* Switch checked state - brand blue */
-[role="switch"][data-state="checked"],
-button[data-state="checked"][role="switch"] {
+/* Track: checked = brand blue */
+.dokuhr-switch[data-state="checked"] {
   background-color: #1F4E78 !important;
 }
 
-/* Switch unchecked state - neutral gray */
-[role="switch"][data-state="unchecked"],
-button[data-state="unchecked"][role="switch"] {
+/* Track: unchecked = neutral gray */
+.dokuhr-switch[data-state="unchecked"] {
   background-color: #cbd5e1 !important;
+}
+
+/* Thumb: white circle always */
+.dokuhr-switch-thumb {
+  border-radius: 9999px !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* ---- CHECKBOX ---- */
+
+/* Unchecked: white with gray border */
+.dokuhr-checkbox {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  border-radius: 4px !important;
+}
+
+/* Checked: brand blue with white checkmark */
+.dokuhr-checkbox[data-state="checked"] {
+  background-color: #1F4E78 !important;
+  border-color: #1F4E78 !important;
+}
+
+/* Checkmark icon: always white */
+.dokuhr-checkbox[data-state="checked"] span {
+  color: #ffffff !important;
 }

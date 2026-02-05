@@ -16,6 +16,8 @@ import {
   Mail,
   Type,
   User,
+  UserCheck,
+  UserX,
 } from 'lucide-react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useHotkeys } from 'react-hotkeys-hook';
@@ -833,7 +835,55 @@ export const AddFieldsFormPartial = ({
                             )}
                           >
                             <User className="h-4 w-4" />
-                            <Trans>Name</Trans>
+                            <Trans>Full Name</Trans>
+                          </p>
+                        </CardContent>
+                      </Card>
+                    </button>
+
+                    <button
+                      type="button"
+                      className="group h-full w-full"
+                      onClick={() => setSelectedField(FieldType.NAME)}
+                      onMouseDown={() => setSelectedField(FieldType.NAME)}
+                    >
+                      <Card
+                        className={cn(
+                          'flex h-full w-full cursor-pointer items-center justify-center group-disabled:opacity-50',
+                        )}
+                      >
+                        <CardContent className="p-4">
+                          <p
+                            className={cn(
+                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                            )}
+                          >
+                            <UserCheck className="h-4 w-4" />
+                            <Trans>First Name</Trans>
+                          </p>
+                        </CardContent>
+                      </Card>
+                    </button>
+
+                    <button
+                      type="button"
+                      className="group h-full w-full"
+                      onClick={() => setSelectedField(FieldType.NAME)}
+                      onMouseDown={() => setSelectedField(FieldType.NAME)}
+                    >
+                      <Card
+                        className={cn(
+                          'flex h-full w-full cursor-pointer items-center justify-center group-disabled:opacity-50',
+                        )}
+                      >
+                        <CardContent className="p-4">
+                          <p
+                            className={cn(
+                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                            )}
+                          >
+                            <UserX className="h-4 w-4" />
+                            <Trans>Last Name</Trans>
                           </p>
                         </CardContent>
                       </Card>
