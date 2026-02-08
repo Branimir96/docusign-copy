@@ -7,14 +7,10 @@ import {
   CalendarIcon,
   CheckSquareIcon,
   ContactIcon,
-  DiscIcon,
-  HashIcon,
   ListIcon,
   MailIcon,
   TextIcon,
-  UserCheckIcon,
   UserIcon,
-  UserXIcon,
 } from 'lucide-react';
 
 import { getBoundingClientRect } from '@documenso/lib/client-only/get-bounding-client-rect';
@@ -75,20 +71,6 @@ export const fieldButtonList = [
     name: msg`Initials`,
   },
   {
-    key: 'FIRST_NAME',
-    type: FieldType.NAME,
-    icon: UserCheckIcon,
-    name: msg`First Name`,
-    defaultLabel: 'First Name',
-  },
-  {
-    key: 'LAST_NAME',
-    type: FieldType.NAME,
-    icon: UserXIcon,
-    name: msg`Last Name`,
-    defaultLabel: 'Last Name',
-  },
-  {
     key: 'DATE',
     type: FieldType.DATE,
     icon: CalendarIcon,
@@ -99,18 +81,6 @@ export const fieldButtonList = [
     type: FieldType.TEXT,
     icon: TextIcon,
     name: msg`Text`,
-  },
-  {
-    key: 'NUMBER',
-    type: FieldType.NUMBER,
-    icon: HashIcon,
-    name: msg`Number`,
-  },
-  {
-    key: 'RADIO',
-    type: FieldType.RADIO,
-    icon: DiscIcon,
-    name: msg`Radio`,
   },
   {
     key: 'CHECKBOX',

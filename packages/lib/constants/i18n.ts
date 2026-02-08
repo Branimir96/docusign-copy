@@ -1,17 +1,19 @@
 import { z } from 'zod';
 
+// To add more languages, add the language code here and add the corresponding
+// entry in SUPPORTED_LANGUAGES below
 export const SUPPORTED_LANGUAGE_CODES = [
-  'de',
   'en',
-  'fr',
-  'es',
-  'it',
-  'nl',
-  'pl',
-  'pt-BR',
-  'ja',
-  'ko',
-  'zh',
+  // 'de',    // German
+  // 'fr',    // French
+  // 'es',    // Spanish
+  // 'it',    // Italian
+  // 'nl',    // Dutch
+  // 'pl',    // Polish
+  // 'pt-BR', // Portuguese (Brazil)
+  // 'ja',    // Japanese
+  // 'ko',    // Korean
+  // 'zh',    // Chinese
 ] as const;
 
 export const ZSupportedLanguageCodeSchema = z.enum(SUPPORTED_LANGUAGE_CODES).catch('en');
@@ -41,51 +43,24 @@ type SupportedLanguage = {
   short: string;
 };
 
+// To add more languages, uncomment the language code in SUPPORTED_LANGUAGE_CODES
+// and add the corresponding entry here
 export const SUPPORTED_LANGUAGES: Record<string, SupportedLanguage> = {
-  de: {
-    full: 'German',
-    short: 'de',
-  },
   en: {
     full: 'English',
     short: 'en',
   },
-  fr: {
-    full: 'French',
-    short: 'fr',
-  },
-  es: {
-    full: 'Spanish',
-    short: 'es',
-  },
-  it: {
-    full: 'Italian',
-    short: 'it',
-  },
-  nl: {
-    short: 'nl',
-    full: 'Dutch',
-  },
-  pl: {
-    short: 'pl',
-    full: 'Polish',
-  },
-  'pt-BR': {
-    short: 'pt-BR',
-    full: 'Portuguese (Brazil)',
-  },
-  ja: {
-    short: 'ja',
-    full: 'Japanese',
-  },
-  ko: {
-    short: 'ko',
-    full: 'Korean',
-  },
-  zh: {
-    short: 'zh',
-    full: 'Chinese',
-  },
+  // Uncomment to enable additional languages:
+  // de: { full: 'German', short: 'de' },
+  // fr: { full: 'French', short: 'fr' },
+  // es: { full: 'Spanish', short: 'es' },
+  // it: { full: 'Italian', short: 'it' },
+  // nl: { full: 'Dutch', short: 'nl' },
+  // pl: { full: 'Polish', short: 'pl' },
+  // 'pt-BR': { full: 'Portuguese (Brazil)', short: 'pt-BR' },
+  // ja: { full: 'Japanese', short: 'ja' },
+  // ko: { full: 'Korean', short: 'ko' },
+  // zh: { full: 'Chinese', short: 'zh' },
 } satisfies Record<SupportedLanguageCodes, SupportedLanguage>;
 
 export const isValidLanguageCode = (code: unknown): code is SupportedLanguageCodes =>

@@ -273,10 +273,9 @@ a[class*="bg-secondary"]:not([class*="nav"]):hover {
 }
 
 /* Navigation Buttons - Solid Blue (for nav elements)
-   Excludes outline variant buttons (have border-input class) which should stay white with border */
+   Excludes outline buttons and primary buttons (which should stay orange) */
 .btn-nav,
 .button-nav,
-nav button:not(.border-input):not(.outline-btn),
 nav a[class*="bg-secondary"] {
   background: #1F4E78 !important;
   color: white !important;
@@ -287,7 +286,6 @@ nav a[class*="bg-secondary"] {
 
 .btn-nav:hover,
 .button-nav:hover,
-nav button:not(.border-input):not(.outline-btn):hover,
 nav a[class*="bg-secondary"]:hover {
   background: #152F4D !important;
   transform: translateY(-2px);

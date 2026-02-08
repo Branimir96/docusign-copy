@@ -12,22 +12,24 @@ export const DocumentSigningDisclosure = ({
   ...props
 }: DocumentSigningDisclosureProps) => {
   return (
-    <p className={cn('text-muted-foreground text-xs', className)} {...props}>
+    <p className={cn('text-xs text-muted-foreground', className)} {...props}>
       <Trans>
         By proceeding with your electronic signature, you acknowledge and consent that it will be
-        used to sign the given document and holds the same legal validity as a handwritten
-        signature. By completing the electronic signing process, you affirm your understanding and
-        acceptance of these conditions.
+        used to sign the given document and holds the same legal validity as a handwritten signature
+        under applicable laws (eIDAS Regulation for EU/Croatia, E-Sign Act for US). Your signature
+        includes an audit trail with timestamp, IP address, and signing events. By completing the
+        electronic signing process, you affirm your understanding and acceptance of these
+        conditions.
       </Trans>
       <span className="mt-2 block">
         <Trans>
           Read the full{' '}
           <Link
-            className="text-documenso-700 underline"
+            className="text-primary underline"
             to="/articles/signature-disclosure"
             target="_blank"
           >
-            signature disclosure
+            Electronic Signature Disclosure
           </Link>
           .
         </Trans>
