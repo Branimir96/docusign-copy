@@ -388,7 +388,7 @@ export const SignUpForm = ({
             </Link>{' '}
             and{' '}
             <Link
-              to="https://documen.so/privacy"
+              to="/privacy"
               target="_blank"
               className="text-documenso-700 duration-200 hover:opacity-70"
             >
