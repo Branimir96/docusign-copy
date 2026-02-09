@@ -57,42 +57,49 @@ export const fieldButtonList = [
     type: FieldType.EMAIL,
     icon: MailIcon,
     name: msg`Email`,
+    defaultLabel: 'Email',
   },
   {
     key: 'NAME',
     type: FieldType.NAME,
     icon: UserIcon,
     name: msg`Full Name`,
+    defaultLabel: 'Full Name',
   },
   {
     key: 'INITIALS',
     type: FieldType.INITIALS,
     icon: ContactIcon,
     name: msg`Initials`,
+    defaultLabel: 'Initials',
   },
   {
     key: 'DATE',
     type: FieldType.DATE,
     icon: CalendarIcon,
     name: msg`Date`,
+    defaultLabel: 'Date',
   },
   {
     key: 'TEXT',
     type: FieldType.TEXT,
     icon: TextIcon,
     name: msg`Text`,
+    defaultLabel: 'Text',
   },
   {
     key: 'CHECKBOX',
     type: FieldType.CHECKBOX,
     icon: CheckSquareIcon,
     name: msg`Checkbox`,
+    defaultLabel: 'Checkbox',
   },
   {
     key: 'DROPDOWN',
     type: FieldType.DROPDOWN,
     icon: ListIcon,
     name: msg`Dropdown`,
+    defaultLabel: 'Dropdown',
   },
 ];
 
@@ -217,7 +224,12 @@ export const EnvelopeEditorFieldDragDrop = ({
       const fieldMeta = structuredClone(FIELD_META_DEFAULT_VALUES[selectedField]);
 
       // Set the label from the button config (e.g. "First Name", "Last Name")
-      if (selectedFieldConfig?.defaultLabel && fieldMeta) {
+      if (
+        selectedFieldConfig &&
+        'defaultLabel' in selectedFieldConfig &&
+        selectedFieldConfig.defaultLabel &&
+        fieldMeta
+      ) {
         fieldMeta.label = selectedFieldConfig.defaultLabel;
       }
 
