@@ -53,7 +53,7 @@ export const BillingPlans = ({ plans }: BillingPlansProps) => {
 
   const { organisations } = useSession();
 
-  const [interval, setInterval] = useState<'monthlyPrice' | 'yearlyPrice'>('yearlyPrice');
+  const [interval, setInterval] = useState<'monthlyPrice' | 'yearlyPrice'>('monthlyPrice');
 
   const isPersonalLayoutMode = isPersonalLayout(organisations);
 
