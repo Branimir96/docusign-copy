@@ -116,12 +116,21 @@ export const onSubscriptionUpdated = async ({
   }
 
   await prisma.$transaction(async (tx) => {
-    await tx.subscription.update({
+    await tx.subscription.upsert({
       where: {
         organisationId: organisation.id,
       },
-      data: {
-        status: status,
+      create: {
+        organisationId: organisation.id,
+        status,
+        customerId,
+        planId: subscription.id,
+        priceId: subscription.items.data[0].price.id,
+        periodEnd,
+        cancelAtPeriodEnd: subscription.cancel_at_period_end,
+      },
+      update: {
+        status,
         planId: subscription.id,
         priceId: subscription.items.data[0].price.id,
         periodEnd,
