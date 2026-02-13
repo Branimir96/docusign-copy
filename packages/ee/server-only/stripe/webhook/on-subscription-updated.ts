@@ -92,10 +92,12 @@ export const onSubscriptionUpdated = async ({
     .with('past_due', () => SubscriptionStatus.PAST_DUE)
     .otherwise(() => SubscriptionStatus.INACTIVE);
 
-  const periodEnd =
+  const rawPeriodEnd =
     subscription.status === 'trialing' && subscription.trial_end
-      ? new Date(subscription.trial_end * 1000)
-      : new Date(subscription.current_period_end * 1000);
+      ? subscription.trial_end
+      : subscription.current_period_end;
+
+  const periodEnd = rawPeriodEnd ? new Date(rawPeriodEnd * 1000) : new Date();
 
   // Migrate the organisation type if it is no longer an individual plan.
   if (

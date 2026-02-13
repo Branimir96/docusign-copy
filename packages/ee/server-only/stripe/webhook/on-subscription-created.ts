@@ -85,10 +85,12 @@ export const onSubscriptionCreated = async ({ subscription }: OnSubscriptionCrea
     .with('past_due', () => SubscriptionStatus.PAST_DUE)
     .otherwise(() => SubscriptionStatus.INACTIVE);
 
-  const periodEnd =
+  const rawPeriodEnd =
     subscription.status === 'trialing' && subscription.trial_end
-      ? new Date(subscription.trial_end * 1000)
-      : new Date(subscription.current_period_end * 1000);
+      ? subscription.trial_end
+      : subscription.current_period_end;
+
+  const periodEnd = rawPeriodEnd ? new Date(rawPeriodEnd * 1000) : new Date();
 
   await prisma.subscription.upsert({
     where: {
